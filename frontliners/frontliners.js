@@ -14,6 +14,14 @@ if (Meteor.isClient) {
       Session.set('counter', Session.get('counter') + 1);
     }
   });
+
+  Template.body.helpers({
+    rankPeople: [
+      { name: 'Avarage Joe', twitter: '@test1', score: '23'},
+      { name: 'Jane Smith', twitter: '@smithy', score: '45'},
+      { name: 'Sam Something', twitter: '@smmy', score: '12'}
+    ]
+  });
 }
 
 if (Meteor.isServer) {

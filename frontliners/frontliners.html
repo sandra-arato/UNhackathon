@@ -1,16 +1,42 @@
 <head>
-  <title>frontliners</title>
+	<title>frontliners</title>
 </head>
 
 <body>
-  <h1>Welcome to Meteor!</h1>
-  <div>Hello
-  	<div class="test">What's up</div>
-  </div>
-  {{> hello}}
+	<header>
+		<h1>UN Frontliners</h1>
+	</header>
+ 
+	<article role="main">
+		<section>
+			<table class="ui basic table">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>twitter handler</th>
+						<th>points</th>
+					</tr>
+				</thead>
+				<tbody>
+					{{#each rankPeople}}
+						{{> people}}
+					{{/each}}
+				</tbody>
+			</table>
+		</section>
+	</article>
+	{{> hello}}
 </body>
 
 <template name="hello">
-  <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
+	<button>Click Me</button>
+	<p>You've pressed the button {{counter}} times.</p>
+</template>
+
+<template name="people">
+	<tr>
+		<td>{{name}}</td>
+		<td>{{twitter}}</td>
+		<td>{{score}}</td>
+	</tr>
 </template>
