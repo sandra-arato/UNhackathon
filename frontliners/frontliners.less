@@ -1,8 +1,76 @@
-div {
-	min-wdith: 300px;
-	background: green;
-	
-	.test {
-		background: red;
+.clearfix:after {
+	content: '.';
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+
+.clearfix {
+	display: inline-block;
+}
+
+
+header {
+	background: #62c370;
+
+	h1 {
+		margin: 0;
+		margin-bottom: 1.6em;
+		padding: 2em 0 1.7em 1.4em;
+		color: #fff;
+	}
+
+	div.ui.input {
+		display: block;
+		position: absolute;
+		right: 0;
+		top: 13em;
+		margin-top: -6.7em;
+		margin-right: 1.4em;
 	}
 }
+
+article.listings {
+	text-align: center;
+
+	table.custom {
+		max-width: 980px;
+		margin: 0 auto;
+		vertical-align: top;
+
+		tr td:first-child {
+			padding: 0;
+			width: 150px;
+		}
+
+		img {
+			margin: 0;
+		}
+	}
+
+	div.social {
+		position: fixed;
+		top: 13em;
+		right: 2em;
+		width: 30px;
+		overflow: hidden;
+		text-align: left;
+
+		a {
+			font-size: 2em;
+			display: block;
+			widht: 2.3em;
+			height: 1.2em;
+			white-space: no-wrap;
+			line-height: 1.4em;
+			margin-bottom: 0.06em;
+
+			span {
+				visibility: hidden;
+			}
+		}
+	}
+}
+

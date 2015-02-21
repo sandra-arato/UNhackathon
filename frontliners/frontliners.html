@@ -5,16 +5,22 @@
 <body>
 	<header>
 		<h1>UN Frontliners</h1>
+		<div class="ui icon input">
+		  <input type="text" placeholder="Search...">
+		  <i class="search icon"></i>
+		</div>
 	</header>
- 
-	<article role="main">
+	<article role="main" class="listings">
+		<div class="social">
+			<a href="#"><i class="facebook icon"></i><span>Facebook</span></a>
+			<a href="#"><i class="twitter icon"></i><span>Twitter</span></a>
+			<a href="#"><i class="google icon"></i><span>Google+</span></a>
+		</div>
 		<section>
-			<table class="ui basic table">
+			<table class="ui striped table custom">
 				<thead>
 					<tr>
-						<th>Name</th>
-						<th>twitter handler</th>
-						<th>points</th>
+						<th colspan="3">Top UN Heros</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -23,20 +29,24 @@
 					{{/each}}
 				</tbody>
 			</table>
+			<a href="#">Load more...</a>
 		</section>
 	</article>
-	{{> hello}}
+	
+	<footer>
+		<p>TBD</p>
+	</footer>
 </body>
-
-<template name="hello">
-	<button>Click Me</button>
-	<p>You've pressed the button {{counter}} times.</p>
-</template>
 
 <template name="people">
 	<tr>
-		<td>{{name}}</td>
-		<td>{{twitter}}</td>
-		<td>{{score}}</td>
+		<td>
+			<img src="{{user.picture.medium}}" alt="{{user.name.first}} {{user.name.last}}"/>
+		</td>
+		<td>
+			<p>{{user.name.first}}</p>
+			<p>@{{user.username}}</p>
+		</td>
+		<td>{{user.email}}</td>
 	</tr>
 </template>
