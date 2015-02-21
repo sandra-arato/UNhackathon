@@ -4,10 +4,10 @@
 
 <body>
 	<header>
-		<h1>UN Frontliners</h1>
+		<h1>Frontliners</h1>
 		<div class="ui icon input">
-		  <input type="text" placeholder="Search...">
-		  <i class="search icon"></i>
+			<input type="text" placeholder="Search...">
+			<i class="search icon"></i>
 		</div>
 	</header>
 	<article role="main" class="listings">
@@ -16,11 +16,33 @@
 			<a href="#"><i class="twitter icon"></i><span>Twitter</span></a>
 			<a href="#"><i class="google icon"></i><span>Google+</span></a>
 		</div>
+		<form>
+			<div class="ui top attached tabular menu custom">
+		    	<div class="item active first" role="tab" data-tab="tab-name">Challenge 1</div>
+		    	<div class="item second" role="tab" data-tab="tab-name2">Challenge 2</div>
+		    	<div class="item third" role="tab" data-tab="tab-name3">Challenge 3</div>
+			</div>
+			<div class="ui bottom attached active tab segment" role="tabpanel" data-tab="tab-name">
+			    <p>Challenge your friend to donate 1 bottle of water each day for a week to countries who need it. Or don't.</p>
+			    <label for="type1" class="ui input">Your friend's twitter account
+			    	<input type="text" id="type1" name="friend-account" />
+			    </label>
+			    <button type="submit" class="ui primary button">Send challenge</button>
+			</div>
+			<div class="ui bottom attached tab segment" role="tabpanel" data-tab="tab-name2">
+			    <p>Second challenge is just to tweet awesome tweets. And change the world. Or don't.</p>
+			</div>
+			<div class="ui bottom attached tab segment" role="tabpanel" data-tab="tab-name3">
+			    <p>Think you can tackle this one? Talk with a dolphin for an hour. Or don't.</p>
+			</div>
+
+			
+		</form>
 		<section>
-			<table class="ui striped table custom">
+			<table class="ui basic table custom">
 				<thead>
 					<tr>
-						<th colspan="3">Top UN Heros</th>
+						<th>Top UN Heros</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -31,7 +53,9 @@
 			</table>
 			<a href="#">Load more...</a>
 		</section>
+		
 	</article>
+	
 	
 	<footer>
 		<p>TBD</p>
@@ -42,11 +66,15 @@
 	<tr>
 		<td>
 			<img src="{{user.picture.medium}}" alt="{{user.name.first}} {{user.name.last}}"/>
+			<div>
+				<p>{{user.name.first}}</p>
+				<p>
+					In fermentum urna erat, eget tristique quam porttitor non. Aliquam mattis tellus libero, nec fringilla diam auctor ac volutpat.
+				</p>
+				<p><a href="https://twitter.com/{{user.username}}">@{{user.username}}</a></p>
+			</div>
+			
 		</td>
-		<td>
-			<p>{{user.name.first}}</p>
-			<p>@{{user.username}}</p>
-		</td>
-		<td>{{user.email}}</td>
+		
 	</tr>
 </template>

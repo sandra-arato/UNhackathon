@@ -1,3 +1,16 @@
+@brickOrange: #FC6131;
+@lightBlue: #76D1DE;
+@aquamarine: #8BE8CB;
+@greyBlue: #7EA2AA;
+@kiwiGreen: #9FD845;
+@text:  #303633;
+
+
+body {
+	font-size: 22px;
+	min-width: 15em;
+}
+
 .clearfix:after {
 	content: '.';
 	display: block;
@@ -13,17 +26,19 @@
 
 
 header {
-	background: #62c370;
+	background: @kiwiGreen;
 
 	h1 {
 		margin: 0;
 		margin-bottom: 1.6em;
-		padding: 2em 0 1.7em 1.4em;
+		padding: 1.2em 0 0.8em 1.4em;
 		color: #fff;
+		font-weight: 300;
+		letter-spacing: 0.03em;
 	}
 
 	div.ui.input {
-		display: block;
+		display: none;
 		position: absolute;
 		right: 0;
 		top: 13em;
@@ -33,24 +48,72 @@ header {
 }
 
 article.listings {
-	text-align: center;
-
-	table.custom {
-		max-width: 980px;
+	box-sizing: border-box;
+	max-width: 32em;
+	padding: 0 1.4em;
+	
+	table.custom.basic {
 		margin: 0 auto;
-		vertical-align: top;
+		border: none !important;
+
+		tr, th, thead, tbody {
+			border: none !important;
+			border-bottom: none !important;
+		}
+
+		th {
+			font-size: 1.8em;
+			padding: 0.3em 0;
+
+		}
 
 		tr td:first-child {
-			padding: 0;
-			width: 150px;
+			position: relative;
+			width: 100%;
+			border: none;
+			padding: 0.4em 0 1.6em 0;
+
+			img {
+				display: inline-block;
+				box-sizing: border-box;
+				padding: 0;
+				margin-top: 0.3em;
+				margin-right: 0.8em;
+				width: 4em;
+				height: 4em;
+				vertical-align: top;
+			}
+			
+			div {
+				display: inline-block;
+				box-sizing: border-box;
+				max-width: 24em;
+				
+
+				p {
+					margin: 0;
+					padding-right: 0.4em;
+					margin-bottom: 0.3em;
+				}
+
+				p:first-child {
+					font-size: 1.2em;
+					font-weight: 600;
+					text-transform: capitalize;
+				}
+
+
+			}
 		}
 
 		img {
+			display: inline-block;
 			margin: 0;
 		}
 	}
 
 	div.social {
+		display: none;
 		position: fixed;
 		top: 13em;
 		right: 2em;
@@ -71,6 +134,63 @@ article.listings {
 				visibility: hidden;
 			}
 		}
+	}
+}
+
+form {
+	display: inline-block;
+	box-sizing: border-box;
+	width: 100%;
+	
+	ui.tabular.menu.custom {
+		div.item {
+			color: #fff;
+		}
+
+		.first.item.active {
+			background: red;
+		}
+
+		.second.item {
+			background-color: @lightBlue;
+		}
+
+		.third.item {
+			background-color: @kiwiGreen;
+		}
+	}
+	
+}
+
+@media (min-width: 760px) {
+	header {
+		background: url('img/bg.jpg') center;
+		background-size: cover;
+		height: 23em;
+		text-align: right;
+		margin-bottom: 2.3em;
+
+		h1 {
+			display: inline-block;
+			position: relative;
+			bottom: -12.4em;
+			margin-right: 3em;
+			width: 328px;
+			height: 95px;
+			background: url('img/Logo.png');
+			text-indent: 100%;
+			white-space: nowrap;
+			overflow: hidden;
+		}
+	}
+
+	article {
+		max-width: 980px;
+		margin: 0 auto;
+	}
+
+	form {
+		width: 23em;
 	}
 }
 
