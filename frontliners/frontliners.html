@@ -37,7 +37,6 @@
 			<div class="ui bottom attached tab segment" role="tabpanel" data-tab="tab-name3">
 			    <p>Think you can tackle this one? Talk with a dolphin for an hour. Or don't.</p>
 			</div>
-
 			
 		</form>
 		<section>
@@ -66,7 +65,7 @@
 <template name="people">
 	<tr>
 		<td>
-			<img src="{{profile_picture_url}}" alt="{{full_name}}"/>
+			<img class="rank-{{rank}}" src="{{profile_picture_url}}" alt="{{full_name}}"/>
 			<div>
 				<p>{{full_name}}</p>
 				<p>
