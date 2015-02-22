@@ -4,6 +4,7 @@ if (Meteor.isClient) {
   Session.setDefault('friends', '');
 
   Session.setDefault('loggedInUser', '');
+  Session.setDefault('postUrl', 'http://104.236.213.224:8080/challenge/');
 
   Meteor.call('retrieve_doc_types', function (error, response) {
 
@@ -40,6 +41,7 @@ if (Meteor.isClient) {
   Template.body.events({
     "click .item": function(event){
       $('.menu .item').tab();
+      Session.set('friends', '');
     },
     "click button[type='button']": function(event){
       var $input = $(event.currentTarget).prev().find('input'),
@@ -70,18 +72,30 @@ if (Meteor.isClient) {
     "click button[type='submit']": function(event) {
       event.preventDefault();
 
-      var dataType = $(event.currentTarget).attr('id'),
-        users = Session.get('friends'),
-        message = 
-        myUrl = "challenge/" + dataType + '?users=' + users + '&challenger=' + Session.get('loggedInUser') ;
-        console.log('test this URL', myUrl);
+      if(Session.get('friends').length > 0) {
+        var dataType = $(event.currentTarget).attr('id'),
+          users = Session.get('friends'),
+          message = 
+          myUrl = "http://104.236.213.224:8080/challenge/" + dataType + '?users=' + users + '&challenger=' + Session.get('loggedInUser') ;
+          console.log('test this URL', myUrl);
+          Session.set('postUrl', myUrl);
+         
+          Meteor.call('send_tweet( Session.get(postUrl))', function (error, response) {
+            if (response) {
+              console.log(response);
+            } else {
+              console.log(error);
+            }
+          });
+        Session.set('friends', '');
+        $('div.ui.label').remove();
 
-      $.ajax({
-        type: "GET",
-        url: myUrl,
-        data: {},
-        success: function(){ console.log('tweet sent')}
-      });
+        $('div.popup').fadeIn("slow");
+        setTimeout(function(){
+          $('div.popup').fadeOut("slow");
+        }, 2000);
+      }
+
 
     }
 
@@ -94,6 +108,11 @@ if (Meteor.isServer) {
     Meteor.methods({
         // Declaring a method
         retrieve_doc_types: function () {
+           this.unblock();
+           return Meteor.http.call("GET", "http://104.236.213.224:8080/scoreboard");
+        },
+
+        send_tweet: function (str) {
            this.unblock();
            return Meteor.http.call("GET", "http://104.236.213.224:8080/scoreboard");
         }

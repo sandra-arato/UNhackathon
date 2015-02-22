@@ -58,6 +58,19 @@ article.listings {
 	section.guest:first-child {
 		display:none;
 	}
+
+	div.popup {
+		display: none;
+		background: @kiwiGreen;
+		color: #fff;
+		margin-top: 0.8em;
+		padding: 1em;
+
+		&.popup.active {
+			display: block;
+			opacity: 1;
+		}
+	}
 	
 	table.custom.basic {
 		margin: 0 auto;
