@@ -16,17 +16,19 @@
 			<a href="#"><i class="twitter icon"></i><span>Twitter</span></a>
 			<a href="#"><i class="google icon"></i><span>Google+</span></a>
 		</div>
-		<form>
-			<div class="ui top attached tabular menu custom">
-		    	<div class="item active first" role="tab" data-tab="tab-name">Challenge 1</div>
-		    	<div class="item second" role="tab" data-tab="tab-name2">Challenge 2</div>
-		    	<div class="item third" role="tab" data-tab="tab-name3">Challenge 3</div>
+
+		<form id="challenge">
+			<div class="ui top attached tabular menu custom" id="tabs">
+				<div class="item active first" role="tab" data-tab="tab-name">Challenge 1</div>
+				<div class="item second" role="tab" data-tab="tab-name2">Challenge 2</div>
+				<div class="item third" role="tab" data-tab="tab-name3">Challenge 3</div>
 			</div>
-			<div class="ui bottom attached active tab segment" role="tabpanel" data-tab="tab-name">
+			<div class="ui bottom attached active tab segment" id="tab-content" role="tabpanel" data-tab="tab-name">
 			    <p>Challenge your friend to donate 1 bottle of water each day for a week to countries who need it. Or don't.</p>
-			    <label for="type1" class="ui input">Your friend's twitter account
-			    	<input type="text" id="type1" name="friend-account" />
+			    <label for="type1" class="ui input">I challenge the following people:
+			    	<input type="text" id="type1" placeholder="Enter friend's twitter account" name="friend-account" />
 			    </label>
+			    <button type="button" class="ui secondary button">Add more</button>
 			    <button type="submit" class="ui primary button">Send challenge</button>
 			</div>
 			<div class="ui bottom attached tab segment" role="tabpanel" data-tab="tab-name2">
@@ -56,7 +58,6 @@
 		
 	</article>
 	
-	
 	<footer>
 		<p>TBD</p>
 	</footer>
@@ -65,13 +66,13 @@
 <template name="people">
 	<tr>
 		<td>
-			<img src="{{user.picture.medium}}" alt="{{user.name.first}} {{user.name.last}}"/>
+			<img src="{{profile_picture_url}}" alt="{{full_name}}"/>
 			<div>
-				<p>{{user.name.first}}</p>
+				<p>{{full_name}}</p>
 				<p>
 					In fermentum urna erat, eget tristique quam porttitor non. Aliquam mattis tellus libero, nec fringilla diam auctor ac volutpat.
 				</p>
-				<p><a href="https://twitter.com/{{user.username}}">@{{user.username}}</a></p>
+				<p><a href="https://twitter.com/{{username}}">@{{username}}</a></p>
 			</div>
 			
 		</td>

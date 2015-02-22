@@ -4,11 +4,12 @@
 @greyBlue: #7EA2AA;
 @kiwiGreen: #9FD845;
 @text:  #303633;
-
+@lightGrey: #F2F2F2;
 
 body {
 	font-size: 22px;
-	min-width: 15em;
+	min-width: 21em;
+	background-color: #FCFCFC;
 }
 
 .clearfix:after {
@@ -82,6 +83,7 @@ article.listings {
 				width: 4em;
 				height: 4em;
 				vertical-align: top;
+				border-left: 8px solid @brickOrange;
 			}
 			
 			div {
@@ -137,27 +139,44 @@ article.listings {
 	}
 }
 
-form {
+#challenge {
 	display: inline-block;
 	box-sizing: border-box;
 	width: 100%;
 	
-	ui.tabular.menu.custom {
+	#tabs {
+
 		div.item {
 			color: #fff;
+			background-color: @lightGrey;
+
+			&:first-child {
+				background: @brickOrange;
+			}
+
+
+			&.second {
+				background: @lightBlue;
+			}
+
+			&:last-child {
+				background: @kiwiGreen;
+			}
+
+			&.active {
+				border-width: 2px;
+				background: @lightGrey;
+				color: @text;
+				border-bottom: none;
+			}	
 		}
 
-		.first.item.active {
-			background: red;
-		}
+		
+		
+	}
 
-		.second.item {
-			background-color: @lightBlue;
-		}
-
-		.third.item {
-			background-color: @kiwiGreen;
-		}
+	div.bottom.attached.tab.segment.active {
+		background: @lightGrey;
 	}
 	
 }
@@ -188,9 +207,11 @@ form {
 		max-width: 980px;
 		margin: 0 auto;
 	}
+}
 
-	form {
-		width: 23em;
+@media (min-width: 980px) {
+	article.listings {
+		max-width: 47em;
 	}
 }
 

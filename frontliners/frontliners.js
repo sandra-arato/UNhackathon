@@ -1,24 +1,39 @@
 if (Meteor.isClient) {
   // counter starts at 0
-  Session.setDefault('counter', 0);
+  Session.setDefault('external_server_data', {});
   Session.setDefault('rankPeople', []);
-  // Session.setDefault('randomUser', {});
-  
+
+ Meteor.call('retrieve_doc_types', function (error, response) {
+   console.log(response);
+   if (response) {
+     Session.set('external_server_data', response);
+     Session.set('loaded', true);
+   }
+    
+ });
+
   Template.body.helpers({
-    rankPeople: [{"user":{"gender":"male","name":{"title":"mr","first":"roland","last":"day"},"location":{"street":"1335 forest ln","city":"dayton","state":"kansas","zip":"33019"},"email":"roland.day35@example.com","username":"greenbear249","password":"sandrine","salt":"r0nkTB88","md5":"2b11bda564c108821bcea504019a8d79","sha1":"37700c9042bf978e154cdaf4c1eed14c9be7911f","sha256":"66960ce563dccd950dae90ed3779b3e0aa5949ce8b6eef5eb03813ca4370a1bd","registered":"999758521","dob":"338742408","phone":"(915)-419-7199","cell":"(565)-417-5293","SSN":"261-30-8486","picture":{"large":"http://api.randomuser.me/portraits/men/65.jpg","medium":"http://api.randomuser.me/portraits/med/men/65.jpg","thumbnail":"http://api.randomuser.me/portraits/thumb/men/65.jpg"},"version":"0.4.1"},"seed":"1f88e57ee8ec8c21"},{"user":{"gender":"female","name":{"title":"ms","first":"rosa","last":"wallace"},"location":{"street":"8028 white oak dr","city":"lansing","state":"colorado","zip":"93901"},"email":"rosa.wallace31@example.com","username":"organicbear761","password":"corinne","salt":"22LnDgKi","md5":"ed0698659f4773081199adae50b7f912","sha1":"3dfdbf098a72ccc37b348cb1146fbadd83676385","sha256":"08ee8b0ce75d69fad6847aca11423a3d12d7c81cd48a0c1970e0a2de90a09805","registered":"1111041912","dob":"183009177","phone":"(721)-528-5993","cell":"(284)-328-5519","SSN":"358-70-4510","picture":{"large":"http://api.randomuser.me/portraits/women/57.jpg","medium":"http://api.randomuser.me/portraits/med/women/57.jpg","thumbnail":"http://api.randomuser.me/portraits/thumb/women/57.jpg"},"version":"0.4.1"},"seed":"248815a4aada711c"},{"user":{"gender":"male","name":{"title":"mr","first":"martin","last":"welch"},"location":{"street":"6570 camden ave","city":"hamsburg","state":"wyoming","zip":"83144"},"email":"martin.welch32@example.com","username":"brownpanda268","password":"thethe","salt":"pTJsa5rA","md5":"5ca2c6c53d4f84ce94b2a1a816cc6759","sha1":"60739a4c626924344cdfed4b1252cc2cb9120edb","sha256":"e31ab5c92b94421a778f44d8c04dfe8e6a0483bd35c19a618c2df8bb073901ce","registered":"1346398358","dob":"387995618","phone":"(625)-466-4787","cell":"(590)-247-6040","SSN":"614-24-8824","picture":{"large":"http://api.randomuser.me/portraits/men/92.jpg","medium":"http://api.randomuser.me/portraits/med/men/92.jpg","thumbnail":"http://api.randomuser.me/portraits/thumb/men/92.jpg"},"version":"0.4.1"},"seed":"acb2b9fee08503d0"},{"user":{"gender":"female","name":{"title":"miss","first":"jessie","last":"west"},"location":{"street":"6935 royal ln","city":"san jose","state":"missouri","zip":"31443"},"email":"jessie.west90@example.com","username":"blueelephant794","password":"dennis","salt":"9Oj4732N","md5":"d0462e443a89942485fe65547d900042","sha1":"0070ccd0a284bee711aeceef71e488a09c218d52","sha256":"48a8c8ab510653259eaf97651c1f7fe0b0b3a15412354d9c8c1764d99cc9e047","registered":"1293874653","dob":"73772606","phone":"(627)-857-7590","cell":"(429)-755-6015","SSN":"416-19-1622","picture":{"large":"http://api.randomuser.me/portraits/women/2.jpg","medium":"http://api.randomuser.me/portraits/med/women/2.jpg","thumbnail":"http://api.randomuser.me/portraits/thumb/women/2.jpg"},"version":"0.4.1"},"seed":"89f4c5cc2046fe36"},{"user":{"gender":"male","name":{"title":"mr","first":"marvin","last":"morris"},"location":{"street":"6572 w belt line rd","city":"provo","state":"montana","zip":"35016"},"email":"marvin.morris80@example.com","username":"heavyostrich943","password":"citizen","salt":"XfLnRqsZ","md5":"644acc69e4d4b5d47504153e5ae55198","sha1":"559730008d535b8924f10e3e8e0dc920d686ecf4","sha256":"1dcf231f99819136ec533e07b521899ffec4cb1ac3cac6f571b33872dd582098","registered":"1281698141","dob":"304753167","phone":"(649)-488-5879","cell":"(392)-211-7923","SSN":"557-85-4057","picture":{"large":"http://api.randomuser.me/portraits/men/83.jpg","medium":"http://api.randomuser.me/portraits/med/men/83.jpg","thumbnail":"http://api.randomuser.me/portraits/thumb/men/83.jpg"},"version":"0.4.1"},"seed":"29f7f6331e0419b1"},{"user":{"gender":"male","name":{"title":"mr","first":"alan","last":"williamson"},"location":{"street":"5225 bruce st","city":"nampa","state":"nebraska","zip":"55632"},"email":"alan.williamson76@example.com","username":"tinyrabbit667","password":"ranger","salt":"kMork7KC","md5":"c53a492a84f6803da3bed52355d685f8","sha1":"196e44158946c14dc4613c8f890a30f67d453d2b","sha256":"7d9d34e349a7b1f8b42c3de121faa7fa72f2aeb3ef8361b132a6b15cde377bb3","registered":"1257261200","dob":"271507625","phone":"(674)-980-1430","cell":"(525)-414-3392","SSN":"257-49-9831","picture":{"large":"http://api.randomuser.me/portraits/men/12.jpg","medium":"http://api.randomuser.me/portraits/med/men/12.jpg","thumbnail":"http://api.randomuser.me/portraits/thumb/men/12.jpg"},"version":"0.4.1"},"seed":"108b4ca90f45646e"},{"user":{"gender":"male","name":{"title":"mr","first":"willard","last":"long"},"location":{"street":"1552 hillcrest rd","city":"ennis","state":"vermont","zip":"34317"},"email":"willard.long91@example.com","username":"beautifuldog958","password":"diesel","salt":"Z1xgc0ZY","md5":"a4de4852bf48996c67d55cbaa8d84b4a","sha1":"b2109241aa660c2cd15aa37c039a7494bf8a7290","sha256":"9de75ba7ce4159a7cdf8e2834de2f44f7523538c8f962c3c829e56bbb0cb9596","registered":"972739271","dob":"117808034","phone":"(466)-883-6780","cell":"(251)-618-9551","SSN":"567-36-2450","picture":{"large":"http://api.randomuser.me/portraits/men/51.jpg","medium":"http://api.randomuser.me/portraits/med/men/51.jpg","thumbnail":"http://api.randomuser.me/portraits/thumb/men/51.jpg"},"version":"0.4.1"},"seed":"c70503c878fbba16"},{"user":{"gender":"female","name":{"title":"ms","first":"rita","last":"miles"},"location":{"street":"3391 shady ln dr","city":"garland","state":"idaho","zip":"81781"},"email":"rita.miles30@example.com","username":"whiteostrich758","password":"thumb","salt":"PLFT7Pba","md5":"260afa03536cc7db2f5653387eb44884","sha1":"91e6daf966f53b6fd9558be652f086d37d4fd8c5","sha256":"6cc1f31dcb6af7ac8031daf091be469924853788922ffac467f94c6886a9ade0","registered":"1336169956","dob":"292135715","phone":"(594)-316-9610","cell":"(845)-994-9267","SSN":"204-64-8817","picture":{"large":"http://api.randomuser.me/portraits/women/9.jpg","medium":"http://api.randomuser.me/portraits/med/women/9.jpg","thumbnail":"http://api.randomuser.me/portraits/thumb/women/9.jpg"},"version":"0.4.1"},"seed":"3eb75cf0f4f61956"},{"user":{"gender":"female","name":{"title":"miss","first":"cathy","last":"wood"},"location":{"street":"2574 frances ct","city":"cape fear","state":"california","zip":"23552"},"email":"cathy.wood68@example.com","username":"orangelion203","password":"camden","salt":"mp7Fqd0u","md5":"e1be486d373ec9cd8360d64a17dee9af","sha1":"f1f5e60bb834858bb998c03f2eb7c9d2ecf3908a","sha256":"63486814938394465aea61b1677a7f302a05265c996aabe1516295eb2fe12780","registered":"1339000628","dob":"488036453","phone":"(905)-209-3388","cell":"(974)-782-2690","SSN":"935-28-8928","picture":{"large":"http://api.randomuser.me/portraits/women/60.jpg","medium":"http://api.randomuser.me/portraits/med/women/60.jpg","thumbnail":"http://api.randomuser.me/portraits/thumb/women/60.jpg"},"version":"0.4.1"},"seed":"e90c66a4d57f9b9a"},{"user":{"gender":"male","name":{"title":"mr","first":"gerald","last":"thompson"},"location":{"street":"9328 oak ridge ln","city":"caldwell","state":"north carolina","zip":"84308"},"email":"gerald.thompson35@example.com","username":"ticklishostrich281","password":"1003","salt":"zGWki9nC","md5":"e470a3f1709fae0d3fb58ae4e699815f","sha1":"f790c2daeb43d0e4ab48609b49dd28e28a027b90","sha256":"54da62ac98a08d55df07000e4da31f7dd8eb7a2521d98b56284d33ef99926ed0","registered":"931600359","dob":"356157613","phone":"(638)-336-1901","cell":"(498)-500-4076","SSN":"248-30-4365","picture":{"large":"http://api.randomuser.me/portraits/men/76.jpg","medium":"http://api.randomuser.me/portraits/med/men/76.jpg","thumbnail":"http://api.randomuser.me/portraits/thumb/men/76.jpg"},"version":"0.4.1"},"seed":"8e34f936a0ee3abd"}]
+    rankPeople: function() {
+        if(loaded) {
+          return Session.get('rankPeople').data;
+        } else {
+          return rankPeople;
+        }
+        
+    }()
   });
-
-
-  Template.body.events({
-    "click .item": function(event){
-      $('.menu .item').tab();
-    }
-  })
 
 }
 
 if (Meteor.isServer) {
   Meteor.startup(function () {
     // code to run on server at startup
+    Meteor.methods({
+        // Declaring a method
+        retrieve_doc_types: function () {
+           this.unblock();
+           return Meteor.http.call("GET", "http://104.236.213.224:8080/scoreboard");
+        }
+    });
   });
 }
