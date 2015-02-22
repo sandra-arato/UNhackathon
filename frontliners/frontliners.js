@@ -1,26 +1,18 @@
 if (Meteor.isClient) {
   // counter starts at 0
-  Session.setDefault('external_server_data', {});
   Session.setDefault('rankPeople', []);
 
- Meteor.call('retrieve_doc_types', function (error, response) {
-   console.log(response);
-   if (response) {
-     Session.set('external_server_data', response);
-     Session.set('loaded', true);
-   }
-    
+  Meteor.call('retrieve_doc_types', function (error, response) {
+    console.log(response);
+    if (response) {
+      Session.set('rankPeople', response.data);
+    }
  });
 
   Template.body.helpers({
     rankPeople: function() {
-        if(loaded) {
-          return Session.get('rankPeople').data;
-        } else {
-          return rankPeople;
-        }
-        
-    }()
+      return Session.get('rankPeople');
+    }
   });
 
 }
