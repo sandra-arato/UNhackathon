@@ -171,7 +171,7 @@ article.listings {
 	div.social {
 		position: fixed;
 		top: 2em;
-		right: 2em;
+		right: 0.8em;
 		width: 40px;
 		overflow: hidden;
 		text-align: left;
@@ -209,11 +209,22 @@ article.listings {
 		display: none;
 	}
 	
+	button[type="submit"] {
+		background: @brickOrange;
+		margin-top: 1.2em;
+	}
+
+	button[type="button"] {
+		background: @kiwiGreen;
+		margin-top: 1.2em;
+	}
+	
 	#tabs {
 
 		div.item {
 			color: #fff;
 			background-color: @lightGrey;
+			cursor: pointer;
 
 			&:first-child {
 				background: @brickOrange;

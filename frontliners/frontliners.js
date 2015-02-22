@@ -2,15 +2,43 @@ if (Meteor.isClient) {
   // counter starts at 0
   Session.setDefault('rankPeople', [{username: 'test1', full_name: 'Hello World', rank: '1', profile_picture_url: 'https://pbs.twimg.com/profile_images/422441705833369602/gRrKy7D3_normal.png'}]);
   Session.setDefault('friends', '');
+  Session.setDefault('lastTweet', '');
 
   Session.setDefault('loggedInUser', '');
   Session.setDefault('postUrl', 'http://104.236.213.224:8080/challenge/');
+  Session.setDefault('getUrl', 'http://104.236.213.224:8080/tweets/');
 
   Meteor.call('retrieve_doc_types', function (error, response) {
 
     if (response) {
       Session.set('rankPeople', response.data);
+      this.array = response.data;
+      // console.log(this.array);
+      var len = this.array.length;
+
+      for (var i = 0; i < len; i++) {
+        var url = Session.get('getUrl') + array[i].username;
+        Session.set('getUrl', url);
+
+        Meteor.call('get_tweet(Session.get("getUrl")), Session.get("rankPeople"))', function (error, response) {
+          console.log(response);
+          if (response) {
+            Session.get("rankPeople").forEach(function(){
+              this.lastTweet = "test";
+            })
+              // this.array[i].lastTweet = response;
+            // return Session.set('lastTweet', response);
+          } else {
+            // this.array[i].lastTweet = "N/A";
+          }
+        });
+        
+      };
+      Session.set('rankPeople', response.data);
+      console.log('test', Session.get("rankPeople"));
     }
+
+
   });
 
 
@@ -40,13 +68,21 @@ if (Meteor.isClient) {
     }
   });
 
+  // Template.people.helpers({
+    // lastTweet: function(){
+      
+    // }
+  // })
+
   Template.body.events({
     "click .item": function(event){
       $('.menu .item').tab();
       Session.set('friends', '');
     },
+
+    // adding tags below the input field
     "click button[type='button']": function(event){
-      var $input = $(event.currentTarget).prev().find('input'),
+      var $input = $(event.currentTarget).parent().parent().find('input'),
         twitterName = $input.val();
 
         if(twitterName.length > 0) {
@@ -59,10 +95,12 @@ if (Meteor.isClient) {
 
     },
 
+
+    // removing tags from form and friendlist
     "click div.ui.label": function(event) {
        var $tag = $(event.currentTarget),
         twitterName = $tag.html().split('<')[0];
-        console.log('tag is' + twitterName);
+        // console.log('tag is' + twitterName);
         $tag.remove();
         var newString = function(str) {
           var newOne = str.substr(0,str.indexOf(twitterName)) + str.substr(str.indexOf(twitterName)+twitterName.length+1);
@@ -71,15 +109,16 @@ if (Meteor.isClient) {
         }
 
         Session.set('friends', newString(Session.get('friends', twitterName)));
-        // Session.get('friends', twitterName)
     },
 
+    //sending friendlist, clearing ui and showing success
     "click button[type='submit']": function(event) {
       event.preventDefault();
 
-      var $input = $(event.currentTarget).parent().find('input'),
+      var $input = $(event.currentTarget).parent().parent().find('input'),
         $button = $(event.currentTarget).parent().find('button[type="button"]');
-
+          console.log($button);
+      
       if($input.val().length > 0 ) {
 
         $button.trigger("click");
@@ -91,10 +130,10 @@ if (Meteor.isClient) {
           users = Session.get('friends'),
           message = 
           myUrl = "http://104.236.213.224:8080/challenge/" + dataType + '?users=' + users + '&challenger=' + Session.get('loggedInUser') ;
-          console.log('test this URL', myUrl);
           Session.set('postUrl', myUrl);
          
-          Meteor.call('send_tweet( Session.get(postUrl))', function (error, response) {
+          Meteor.call('send_tweet(Session.get("postUrl"))', function (error, response) {
+            console.log('send tweet test');
             if (response) {
               console.log(response);
             } else {
@@ -109,7 +148,6 @@ if (Meteor.isClient) {
           $('div.popup').fadeOut("slow");
         }, 2000);
       }
-
 
     }
 
@@ -128,8 +166,13 @@ if (Meteor.isServer) {
 
         send_tweet: function (str) {
            this.unblock();
-           return Meteor.http.call("GET", "http://104.236.213.224:8080/scoreboard");
-        }
+           return Meteor.http.call("GET", postUrl);
+        },
+
+        get_tweet: function (str, users) {
+           this.unblock();
+           return Meteor.http.call("GET", getUrl, users);
+        },
 
     });
   });
