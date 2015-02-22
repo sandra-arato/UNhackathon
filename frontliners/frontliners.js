@@ -25,9 +25,11 @@ if (Meteor.isClient) {
     var checkGuest = getParameterByName("username").length === 0 || getParameterByName("username") === "GUEST";
     Session.set('loggedInUser', getParameterByName("username"));
     if (!checkGuest) {
-      $('article.listings section').addClass('guest');
+      $('article.listings section.intro').addClass('guest');
+      $('#challenge').removeClass('guest');
     } else {
       $('#challenge').addClass('guest');
+      $('article.listings section.intro').removeClass('guest');
     }
 
   });
@@ -47,11 +49,14 @@ if (Meteor.isClient) {
       var $input = $(event.currentTarget).prev().find('input'),
         twitterName = $input.val();
 
-      $input.after('<div class="ui label">' + twitterName + '<i class="delete icon"></i></div>');
-      $input.val('');
-      twitterName = twitterName + ',' +Session.get('friends', twitterName);
-      Session.set('friends', twitterName);
-      console.log(Session.get('friends'));
+        if(twitterName.length > 0) {
+          $input.after('<div class="ui label">' + twitterName + '<i class="delete icon"></i></div>');
+          $input.val('');
+          twitterName = twitterName + ',' +Session.get('friends', twitterName);
+          Session.set('friends', twitterName);
+          console.log(Session.get('friends'));
+        }
+
     },
 
     "click div.ui.label": function(event) {
@@ -71,6 +76,15 @@ if (Meteor.isClient) {
 
     "click button[type='submit']": function(event) {
       event.preventDefault();
+
+      var $input = $(event.currentTarget).parent().find('input'),
+        $button = $(event.currentTarget).parent().find('button[type="button"]');
+
+      if($input.val().length > 0 ) {
+
+        $button.trigger("click");
+        return;
+      }
 
       if(Session.get('friends').length > 0) {
         var dataType = $(event.currentTarget).attr('id'),

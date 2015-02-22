@@ -55,7 +55,15 @@ article.listings {
 	max-width: 32em;
 	padding: 0 1.4em;
 
-	section.guest:first-child {
+	section.intro {
+		padding: 1.2em;
+		padding-top: 0.4em;
+		background: @lightBlue;
+		color: #fff;
+		letter-spacing: 0.02em;
+	}
+
+	section.intro.guest {
 		display:none;
 	}
 
@@ -161,27 +169,34 @@ article.listings {
 	}
 
 	div.social {
-		display:hidden;
 		position: fixed;
-		top: 13em;
+		top: 2em;
 		right: 2em;
-		width: 30px;
+		width: 40px;
 		overflow: hidden;
 		text-align: left;
 
 		a {
 			font-size: 1.4em;
 			display: block;
-			widht: 2.3em;
-			height: 1.2em;
+			height: 1.4em;
 			white-space: no-wrap;
 			line-height: 1.4em;
 			margin-bottom: 0.06em;
+			color: @lightBlue;
+			padding-bottom: 4px;
+
+			&:hover {
+				color: #fff;
+				background: @lightBlue;
+			}
 
 			span {
 				visibility: hidden;
 			}
 		}
+
+
 	}
 }
 
