@@ -1,10 +1,12 @@
 if (Meteor.isClient) {
   // counter starts at 0
-  Session.setDefault('rankPeople', [{username: 'test1', full_name: 'Hello World', rank: '1', profile_picture_url: 'https://pbs.twimg.com/profile_images/422441705833369602/gRrKy7D3_normal.png'}]);
+  Session.setDefault('rankPeople', [{username: 'loading', full_name: 'Hello World', rank: '1', profile_picture_url: 'https://pbs.twimg.com/profile_images/422441705833369602/gRrKy7D3_normal.png'}]);
   Session.setDefault('friends', '');
   Session.setDefault('lastTweet', '');
+  Session.setDefault('rankLoaded', false);
 
   Session.setDefault('loggedInUser', '');
+  Session.setDefault('isGuest', true);
   Session.setDefault('postUrl', 'http://104.236.213.224:8080/challenge/');
   Session.setDefault('getUrl', 'http://104.236.213.224:8080/tweets/');
 
@@ -12,30 +14,7 @@ if (Meteor.isClient) {
 
     if (response) {
       Session.set('rankPeople', response.data);
-      this.array = response.data;
-      // console.log(this.array);
-      var len = this.array.length;
-
-      for (var i = 0; i < len; i++) {
-        var url = Session.get('getUrl') + array[i].username;
-        Session.set('getUrl', url);
-
-        Meteor.call('get_tweet(Session.get("getUrl")), Session.get("rankPeople"))', function (error, response) {
-          console.log(response);
-          if (response) {
-            Session.get("rankPeople").forEach(function(){
-              this.lastTweet = "test";
-            })
-              // this.array[i].lastTweet = response;
-            // return Session.set('lastTweet', response);
-          } else {
-            // this.array[i].lastTweet = "N/A";
-          }
-        });
-        
-      };
-      Session.set('rankPeople', response.data);
-      console.log('test', Session.get("rankPeople"));
+      Session.set('rankLoaded', true);
     }
 
 
@@ -43,15 +22,17 @@ if (Meteor.isClient) {
 
 
   Meteor.startup(function(){
+
     function getParameterByName(name) {
       name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
       var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
           results = regex.exec(location.search);
       return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
     }
-
-    var checkGuest = getParameterByName("username").length === 0 || getParameterByName("username") === "GUEST";
+    var urlParam = getParameterByName("username"),
+      checkGuest = urlParam.length === 0 || urlParam === "GUEST";
     Session.set('loggedInUser', getParameterByName("username"));
+    Session.set('isGuest', checkGuest);
     if (!checkGuest) {
       $('article.listings section.intro').addClass('guest');
       $('#challenge').removeClass('guest');
@@ -59,20 +40,17 @@ if (Meteor.isClient) {
       $('#challenge').addClass('guest');
       $('article.listings section.intro').removeClass('guest');
     }
-
+    
   });
 
   Template.body.helpers({
     rankPeople: function() {
       return Session.get('rankPeople');
+    },
+    rankLoaded: function(){
+      return Session.get('rankLoaded');
     }
-  });
-
-  // Template.people.helpers({
-    // lastTweet: function(){
-      
-    // }
-  // })
+  })
 
   Template.body.events({
     "click .item": function(event){
@@ -100,7 +78,6 @@ if (Meteor.isClient) {
     "click div.ui.label": function(event) {
        var $tag = $(event.currentTarget),
         twitterName = $tag.html().split('<')[0];
-        // console.log('tag is' + twitterName);
         $tag.remove();
         var newString = function(str) {
           var newOne = str.substr(0,str.indexOf(twitterName)) + str.substr(str.indexOf(twitterName)+twitterName.length+1);
@@ -128,12 +105,9 @@ if (Meteor.isClient) {
       if(Session.get('friends').length > 0) {
         var dataType = $(event.currentTarget).attr('id'),
           users = Session.get('friends'),
-          message = 
           myUrl = "http://104.236.213.224:8080/challenge/" + dataType + '?users=' + users + '&challenger=' + Session.get('loggedInUser') ;
-          Session.set('postUrl', myUrl);
-         
-          Meteor.call('send_tweet(Session.get("postUrl"))', function (error, response) {
-            console.log('send tweet test');
+          Meteor.call('send_tweet', myUrl, function (error, response) {
+
             if (response) {
               console.log(response);
             } else {
@@ -164,14 +138,14 @@ if (Meteor.isServer) {
            return Meteor.http.call("GET", "http://104.236.213.224:8080/scoreboard");
         },
 
-        send_tweet: function (str) {
+        send_tweet: function (url) {
            this.unblock();
-           return Meteor.http.call("GET", postUrl);
+           return Meteor.http.call("POST", url);
         },
 
-        get_tweet: function (str, users) {
+        get_tweet: function (url) {
            this.unblock();
-           return Meteor.http.call("GET", getUrl, users);
+           return Meteor.http.call("GET", getUrl);
         },
 
     });
