@@ -1,0 +1,33 @@
+<template name="home">
+
+		<div class="social">
+			<a href="http://twitter.com/share?text=Check out list of UN Frontliners&amp;url=http://www.frontliners.org"><i class="twitter icon"></i><span>Twitter</span></a>
+			<a href="https://plus.google.com/share?url=http://www.frontliners.org"><i class="google icon"></i><span>Google+</span></a>
+		</div>
+		<section class="intro">
+			<h2>Celebrating Our Heroes</h2>
+			<p>We gathered people who have significant effect on others, while doing so, they are also actively tell their story on Twitter. These exceptional people are changing our world, so they set an example to follow both online and offline. Check out their story by following them!</p>
+		</section>
+			{{> challenge}}
+		<div class="popup">Tweets sent! Thanks for contributing to a better world!</div>
+		<section>
+			<table class="ui basic table custom">
+				<thead>
+					<tr>
+						<th>Top UN Heroes</th>
+					</tr>
+				</thead>
+				<tbody>
+						{{#each volunteer}}
+							{{> list}}
+<!-- 						{{else}}
+							Loading... -->
+						{{/each}}
+				</tbody>
+			</table>
+			<!-- <a href="#">Load more...</a> -->
+		</section>
+		
+</template>
+
+

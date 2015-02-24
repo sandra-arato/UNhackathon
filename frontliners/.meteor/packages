@@ -12,3 +12,4 @@ nooitaf:semantic-ui
 nooitaf:semantic-ui-less
 http
 datariot:ganalytics
+iron:router

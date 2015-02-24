@@ -29,7 +29,8 @@ body {
 
 
 header {
-	background: @kiwiGreen;
+	background: url('img/bg.jpg') center;
+	background-size: cover;
 
 	h1 {
 		margin: 0;
@@ -200,6 +201,24 @@ article.listings {
 	}
 }
 
+footer {
+	box-sizing: border-box;
+	background: @text;
+	color: #fff;
+
+	p {
+		margin: 0 auto;
+		max-width: 960px;
+		width: 90%;
+		padding: 3.4em 0.8em;
+		background-image: url('img/rise-powered.png');
+		background-position-x: left;
+		background-position-y: 20%;
+		background-repeat: no-repeat;
+	}
+	
+}
+
 #challenge {
 	display: inline-block;
 	box-sizing: border-box;
@@ -261,8 +280,6 @@ article.listings {
 
 @media (min-width: 760px) {
 	header {
-		background: url('img/bg.jpg') center;
-		background-size: cover;
 		height: 11.4em;
 		text-align: right;
 		margin-bottom: 2.3em;

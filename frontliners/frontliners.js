@@ -1,6 +1,23 @@
+Router.map(function () {
+  this.route('about', {
+    layoutTemplate: 'layout',
+    yieldTemplates: {
+      'footer': {to: 'footer'}
+    }
+  });  // By default, path = '/about', template = 'about'
+  this.route('home', {
+    path: '/',  //overrides the default '/home'
+    layoutTemplate: 'layout',
+    yieldTemplates: {
+      'footer': {to: 'footer'}
+    }
+  });
+});
+
+
 if (Meteor.isClient) {
   // counter starts at 0
-  Session.setDefault('rankPeople', [{username: 'loading', full_name: 'Hello World', rank: '1', profile_picture_url: 'https://pbs.twimg.com/profile_images/422441705833369602/gRrKy7D3_normal.png'}]);
+  Session.setDefault('volunteer', [{username: 'loading', full_name: 'Hello World', rank: '1', profile_picture_url: 'https://pbs.twimg.com/profile_images/422441705833369602/gRrKy7D3_normal.png'}]);
   Session.setDefault('friends', '');
   Session.setDefault('lastTweet', '');
   Session.setDefault('rankLoaded', false);
@@ -13,7 +30,7 @@ if (Meteor.isClient) {
   Meteor.call('retrieve_doc_types', function (error, response) {
 
     if (response) {
-      Session.set('rankPeople', response.data);
+      Session.set('volunteer', response.data);
       Session.set('rankLoaded', true);
     }
 
@@ -44,8 +61,8 @@ if (Meteor.isClient) {
   });
 
   Template.body.helpers({
-    rankPeople: function() {
-      return Session.get('rankPeople');
+    volunteer: function() {
+      return Session.get('volunteer');
     },
     rankLoaded: function(){
       return Session.get('rankLoaded');
