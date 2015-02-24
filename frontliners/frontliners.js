@@ -4,7 +4,7 @@ Router.map(function () {
     yieldTemplates: {
       'footer': {to: 'footer'}
     }
-  });  // By default, path = '/about', template = 'about'
+  });
   this.route('home', {
     path: '/',  //overrides the default '/home'
     layoutTemplate: 'layout',
@@ -18,7 +18,7 @@ Router.map(function () {
 if (Meteor.isClient) {
   // counter starts at 0
   Session.setDefault('volunteer', [{username: 'loading', full_name: 'Hello World', rank: '1', profile_picture_url: 'https://pbs.twimg.com/profile_images/422441705833369602/gRrKy7D3_normal.png'}]);
-  Session.setDefault('friends', '');
+  Session.setDefault('challenged_friends', ''); // this is who we will tweet the challenge
   Session.setDefault('lastTweet', '');
   Session.setDefault('rankLoaded', false);
 
@@ -49,15 +49,6 @@ if (Meteor.isClient) {
     var urlParam = getParameterByName("username"),
       checkGuest = urlParam.length === 0 || urlParam === "GUEST";
     Session.set('loggedInUser', getParameterByName("username"));
-    Session.set('isGuest', checkGuest);
-    if (!checkGuest) {
-      $('article.listings section.intro').addClass('guest');
-      $('#challenge').removeClass('guest');
-    } else {
-      $('#challenge').addClass('guest');
-      $('article.listings section.intro').removeClass('guest');
-    }
-    
   });
 
   Template.body.helpers({
@@ -69,10 +60,25 @@ if (Meteor.isClient) {
     }
   })
 
-  Template.body.events({
+  Template.home.helpers({
+    loggedInUser: function() {
+      function getParameterByName(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+            results = regex.exec(location.search);
+        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+      }
+      var urlParam = getParameterByName("username");
+
+      return urlParam;
+    }
+  });
+
+  Template.home.events({
     "click .item": function(event){
       $('.menu .item').tab();
-      Session.set('friends', '');
+      Session.set('challenged_friends', '');
+      console.log('test tab.');
     },
 
     // adding tags below the input field
@@ -83,13 +89,11 @@ if (Meteor.isClient) {
         if(twitterName.length > 0) {
           $input.after('<div class="ui label">' + twitterName + '<i class="delete icon"></i></div>');
           $input.val('');
-          twitterName = twitterName + ',' +Session.get('friends', twitterName);
-          Session.set('friends', twitterName);
-          console.log(Session.get('friends'));
+          twitterName = twitterName + ',' +Session.get('challenged_friends', twitterName);
+          Session.set('challenged_friends', twitterName);
+         
         }
-
     },
-
 
     // removing tags from form and friendlist
     "click div.ui.label": function(event) {
@@ -98,11 +102,10 @@ if (Meteor.isClient) {
         $tag.remove();
         var newString = function(str) {
           var newOne = str.substr(0,str.indexOf(twitterName)) + str.substr(str.indexOf(twitterName)+twitterName.length+1);
-          console.log(newOne);
           return newOne;
         }
 
-        Session.set('friends', newString(Session.get('friends', twitterName)));
+        Session.set('challenged_friends', newString(Session.get('challenged_friends', twitterName)));
     },
 
     //sending friendlist, clearing ui and showing success
@@ -119,9 +122,9 @@ if (Meteor.isClient) {
         return;
       }
 
-      if(Session.get('friends').length > 0) {
+      if(Session.get('challenged_friends').length > 0) {
         var dataType = $(event.currentTarget).attr('id'),
-          users = Session.get('friends'),
+          users = Session.get('challenged_friends'),
           myUrl = "http://104.236.213.224:8080/challenge/" + dataType + '?users=' + users + '&challenger=' + Session.get('loggedInUser') ;
           Meteor.call('send_tweet', myUrl, function (error, response) {
 
@@ -131,7 +134,7 @@ if (Meteor.isClient) {
               console.log(error);
             }
           });
-        Session.set('friends', '');
+        Session.set('challenged_friends', '');
         $('div.ui.label').remove();
 
         $('div.popup').fadeIn("slow");

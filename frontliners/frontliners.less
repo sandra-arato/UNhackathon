@@ -1,5 +1,6 @@
 @brickOrange: #FC6131;
 @lightBlue: #76D1DE;
+@tagBlue: #A6E4ED;
 @aquamarine: #8BE8CB;
 @greyBlue: #7EA2AA;
 @kiwiGreen: #9FD845;
@@ -31,23 +32,72 @@ body {
 header {
 	background: url('img/bg.jpg') center;
 	background-size: cover;
+	text-align: right;
 
 	h1 {
-		margin: 0;
-		margin-bottom: 1.6em;
+		margin: 0 0.8em 1em 0;
 		padding: 1.2em 0 0.8em 1.4em;
 		color: #fff;
 		font-weight: 300;
 		letter-spacing: 0.03em;
+		
 	}
 
-	div.ui.input {
-		display: none;
-		position: absolute;
-		right: 0;
-		top: 13em;
-		margin-top: -6.7em;
-		margin-right: 1.4em;
+	div.social {
+		position: fixed;
+		top: 2em;
+		left: 0.8em;
+		width: 40px;
+		overflow: hidden;
+		text-align: left;
+
+		a {
+			font-size: 1.4em;
+			display: block;
+			height: 1.4em;
+			white-space: no-wrap;
+			line-height: 1.4em;
+			margin-bottom: 0.06em;
+			color: #fff;
+			padding-bottom: 4px;
+			margin-bottom: 12px;
+			background: @lightBlue;
+			transition: background-color 0.3s ease, color 0.3s ease;
+
+			&:hover {
+				background: @brickOrange;
+				color: #fff;
+			}
+
+			span {
+				visibility: hidden;
+			}
+		}
+	}
+}
+
+nav {
+	margin: -0.8em auto 1.2em auto;
+	padding-left: 2em;
+
+	a {
+		padding: 0.4em
+	}
+}
+
+figure {
+	box-sizing: border-box;
+	margin: 1.6em auto 2em auto;
+
+	img {
+		width: 100%;
+	}
+
+	figcaption {
+		font-size: 0.8em;
+		color: #737373;
+		text-align: center;
+		padding-top: 0.4em;
 	}
 }
 
@@ -82,7 +132,6 @@ article.listings {
 	}
 	
 	table.custom.basic {
-		margin: 0 auto;
 		border: none !important;
 
 		tr, th, thead, tbody {
@@ -90,10 +139,16 @@ article.listings {
 			border-bottom: none !important;
 		}
 
+		div.ui.input {
+			position: relative;
+			display: inline-block;
+			font-size: 0.8em;
+			line-height: 75px;
+		}
+
 		th {
 			font-size: 1.8em;
 			padding: 0.3em 0;
-
 		}
 
 		tr td:first-child {
@@ -168,42 +223,12 @@ article.listings {
 			}
 		}
 	}
-
-	div.social {
-		position: fixed;
-		top: 2em;
-		right: 0.8em;
-		width: 40px;
-		overflow: hidden;
-		text-align: left;
-
-		a {
-			font-size: 1.4em;
-			display: block;
-			height: 1.4em;
-			white-space: no-wrap;
-			line-height: 1.4em;
-			margin-bottom: 0.06em;
-			color: @lightBlue;
-			padding-bottom: 4px;
-
-			&:hover {
-				color: #fff;
-				background: @lightBlue;
-			}
-
-			span {
-				visibility: hidden;
-			}
-		}
-
-
-	}
 }
 
 footer {
 	box-sizing: border-box;
 	background: @text;
+	margin-top: 2em;
 	color: #fff;
 
 	p {
@@ -237,7 +262,19 @@ footer {
 		background: @kiwiGreen;
 		margin-top: 1.2em;
 	}
-	
+
+	input {
+		display: inline-block;
+		font-size: 0.8em;
+		width: 16em;
+	}
+
+	.ui.label {
+		font-size: 0.8em;
+		margin-top: 0.4em;
+		background: @tagBlue;
+	}
+
 	#tabs {
 
 		div.item {
@@ -282,7 +319,7 @@ footer {
 	header {
 		height: 11.4em;
 		text-align: right;
-		margin-bottom: 2.3em;
+		margin-bottom: 1.2em;
 
 		h1 {
 			display: inline-block;
@@ -301,6 +338,21 @@ footer {
 	article {
 		max-width: 980px;
 		margin: 0 auto;
+		margin-bottom: 3em;
+	}
+
+	nav a {
+		margin: 0 0 4em 0.8em;
+		padding: 0.6em;
+	}
+
+	figure {
+		max-width: 700px;
+	}
+
+
+	table.basic.custom:first-child {
+		margin: 2.4em auto;
 	}
 }
 
