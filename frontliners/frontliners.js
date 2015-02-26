@@ -23,7 +23,7 @@ if (Meteor.isClient) {
   Session.setDefault('loggedInUser', '');
   Session.setDefault('isGuest', true);
   Session.setDefault('postUrl', 'http://104.236.213.224:9000/challenge/');
-  Session.setDefault('getUrl', 'http://151.225.41.147:8080/tweets/');
+  Session.setDefault('getUrl', 'http://104.236.213.224:9000/tweets/');
 
   Meteor.call('retrieve_doc_types', function (error, response) {
 
@@ -133,7 +133,7 @@ if (Meteor.isClient) {
       if(Session.get('challenged_friends').length > 0) {
         var dataType = $(event.currentTarget).attr('id'),
           users = Session.get('challenged_friends'),
-          myUrl = "http://104.236.213.224:8080/challenge/" + dataType + '?users=' + users + '&challenger=' + Session.get('loggedInUser') ;
+          myUrl = "http://104.236.213.224:9000/challenge/" + dataType + '?users=' + users + '&challenger=' + Session.get('loggedInUser') ;
           Meteor.call('send_tweet', myUrl, function (error, response) {
 
             if (response) {
@@ -186,7 +186,7 @@ if (Meteor.isServer) {
 
         get_tweet: function (username) {
            this.unblock();
-           return Meteor.http.call("GET", "http://151.225.41.147:8080/tweets" + username);
+           return Meteor.http.call("GET", "http://104.236.213.224:9000/tweets" + username);
         },
 
     });
