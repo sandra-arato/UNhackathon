@@ -1,13 +1,12 @@
 <template name="list">
 	<tr>
-		<td>
+		<td id="{{username}}">
 			<img class="rank-{{rank}}" src="{{profile_picture_url}}" alt="{{full_name}}"/>
 			<div>
 				<p>{{full_name}}</p>
+				<p>{{tweet}}</p>
 				<p><a href="https://twitter.com/{{username}}">@{{username}}</a></p>
 			</div>
-			
 		</td>
-		
 	</tr>
 </template>

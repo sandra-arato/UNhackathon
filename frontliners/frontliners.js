@@ -17,21 +17,19 @@ Router.map(function () {
 
 if (Meteor.isClient) {
   // counter starts at 0
-  Session.setDefault('volunteer', [{username: 'loading', full_name: 'Hello World', rank: '1', profile_picture_url: 'https://pbs.twimg.com/profile_images/422441705833369602/gRrKy7D3_normal.png'}]);
+  Session.setDefault('volunteer', []);
   Session.setDefault('challenged_friends', ''); // this is who we will tweet the challenge
-  Session.setDefault('lastTweet', '');
-  Session.setDefault('rankLoaded', false);
+  Session.setDefault('tweet', 'test');
 
   Session.setDefault('loggedInUser', '');
   Session.setDefault('isGuest', true);
-  Session.setDefault('postUrl', 'http://104.236.213.224:8080/challenge/');
-  Session.setDefault('getUrl', 'http://104.236.213.224:8080/tweets/');
+  Session.setDefault('postUrl', 'http://104.236.213.224:9000/challenge/');
+  Session.setDefault('getUrl', 'http://104.236.213.224:9000/tweets/');
 
   Meteor.call('retrieve_doc_types', function (error, response) {
 
     if (response) {
       Session.set('volunteer', response.data);
-      Session.set('rankLoaded', true);
     }
 
 
@@ -51,15 +49,6 @@ if (Meteor.isClient) {
     Session.set('loggedInUser', getParameterByName("username"));
   });
 
-  Template.body.helpers({
-    volunteer: function() {
-      return Session.get('volunteer');
-    },
-    rankLoaded: function(){
-      return Session.get('rankLoaded');
-    }
-  })
-
   Template.home.helpers({
     loggedInUser: function() {
       function getParameterByName(name) {
@@ -69,10 +58,23 @@ if (Meteor.isClient) {
         return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
       }
       var urlParam = getParameterByName("username");
-
       return urlParam;
+    },
+    volunteer: function() {
+      return Session.get('volunteer');
     }
-  });
+  })
+
+  Template.list.helpers({
+    tweet: function(){
+      var myUrl = "http://104.236.213.224:9000/tweets/" + this.username;
+      Meteor.call('get_tweet', myUrl, function (error, response) {
+        if (response) {
+          return response.data;
+        }
+      });
+    }
+  })
 
   Template.home.events({
     "click .item": function(event){
@@ -143,9 +145,22 @@ if (Meteor.isClient) {
         }, 2000);
       }
 
+    },
+
+    //searching for user
+    "click i.icon": function(event){
+      var user = $(event.currentTarget).prev().val();
+      console.log(user)
+
+      if($('#'+user).length > 0) {
+        $('html, body').animate({
+            scrollTop: $('#'+user).offset().top
+        }, 800);
+      }
     }
 
   });
+
 }
 
 if (Meteor.isServer) {
@@ -155,7 +170,7 @@ if (Meteor.isServer) {
         // Declaring a method
         retrieve_doc_types: function () {
            this.unblock();
-           return Meteor.http.call("GET", "http://104.236.213.224:8080/scoreboard");
+           return Meteor.http.call("GET", "http://104.236.213.224:9000/scoreboard");
         },
 
         send_tweet: function (url) {
@@ -165,7 +180,7 @@ if (Meteor.isServer) {
 
         get_tweet: function (url) {
            this.unblock();
-           return Meteor.http.call("GET", getUrl);
+           return Meteor.http.call("GET", url);
         },
 
     });
