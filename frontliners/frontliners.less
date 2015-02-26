@@ -101,6 +101,13 @@ figure {
 	}
 }
 
+quote {
+	display: block;
+	font-size: 2.7em;
+	color: @brickOrange;
+	margin: 1.2em auto 1.4em auto;
+}
+
 article.listings {
 	box-sizing: border-box;
 	max-width: 32em;
@@ -241,12 +248,21 @@ footer {
 		margin: 0 auto;
 		max-width: 960px;
 		width: 90%;
-		padding: 3.4em 0.8em;
-		background-image: url('img/rise-powered.png');
-		background-position-x: left;
-		background-position-y: 20%;
-		background-repeat: no-repeat;
+		padding: 2.2em 0.8em;
+		
 	}
+
+	a.rise {
+			display: block;
+			max-width: 80%;
+			margin: 0.5em auto;
+			padding-left: 110px;
+			background-image: url('img/rise-powered.png');
+			background-position-y: 20%;
+			background-repeat: no-repeat;
+			min-height: 50px;
+			padding-bottom: 30px;
+		}
 	
 }
 
@@ -319,6 +335,47 @@ footer {
 		}
 	}
 	
+}
+
+section.steps {
+	box-sizing: border-box;
+
+	h2 {
+		color: @kiwiGreen;
+		font-size: 1.2em;
+	}
+
+	div {
+		box-sizing: border-box;
+		padding: 0.5em;
+		max-height: 350px;
+		overflow: hidden;
+		
+
+		img {
+			display: inline-block;
+			width: 30%;
+			border: 1px solid @lightGrey;
+
+		}
+
+		p {
+			display: inline-block;
+			width: 67%;
+			margin-left: 2%;
+			vertical-align: top;
+		}
+	}
+
+	div.cta {
+		text-align: center;
+		background: @lightBlue;
+		font-size: 2.8em;
+		color: #fff;
+		margin: 1.3em auto;
+		overflow: auto;
+		max-height: none;
+	}
 }
 
 @media (min-width: 760px) {
